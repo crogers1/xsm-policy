@@ -41,12 +41,12 @@ allow dom0_t self:mmu { pinpage map_read map_write adjust updatemp stat exchange
 allow dom0_t self:grant { query setup };
 allow dom0_t self:domain { getscheduler getdomaininfo getvcpuinfo
                            getaffinity };
-allow dom0_t self:domain2 { setscheduler };
+allow dom0_t self:domain2 { setscheduler get_domain_state};
 
 allow dom0_t self:event { bind create };
 allow dom0_t self:resource { add remove setup };
 
-allow dom0_t evchn0-0_t:event send;
+allow dom0_t evchn0-0_t:event { create send status };
 
 allow dom0_t iomem_t:resource setup;
 allow dom0_t stubdom_t:domain2 make_priv_for;
@@ -55,6 +55,8 @@ allow dom0_t xen_t:resource setup;
 allow dom0_t xen_t:xen mca_op;
 allow dom0_t xen_t:xen2 get_cpu_featureset;
 allow dom0_t xen_t:xen2 get_dom0_console;
+
+allow dom0_t unlabeled_t:domain2 get_domain_state;
 
 domio_map_rw_mmu(dom0_t)
 
